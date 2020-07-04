@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Using MobileNet for our Monkey Classifer
-# 
 # ### Loading the MobileNet Model
 
 # Freeze all layers except the top 4, as we'll only be training the top 4
-
-# In[1]:
 
 
 from keras.applications import MobileNet
@@ -30,9 +26,8 @@ for (i,layer) in enumerate(MobileNet.layers):
     print(str(i) + " "+ layer.__class__.__name__, layer.trainable)
 
 
+    
 # ### Let's make a function that returns our FC Head
-
-# In[2]:
 
 
 def lw(bottom_model, num_classes):
@@ -48,9 +43,8 @@ def lw(bottom_model, num_classes):
     return top_model
 
 
+  
 # ### Let's add our FC Head back onto MobileNet
-
-# In[3]:
 
 
 from keras.models import Sequential
@@ -68,9 +62,9 @@ model = Model(inputs = MobileNet.input, outputs = FC_Head)
 print(model.summary())
 
 
-# ### Loading our Monkey Breed Dataset
 
-# In[4]:
+
+# ### Loading our Dataset
 
 
 from keras.preprocessing.image import ImageDataGenerator
@@ -108,7 +102,6 @@ validation_generator = validation_datagen.flow_from_directory(
 # ### Training out Model
 # - Note we're using checkpointing and early stopping
 
-# In[5]:
 
 
 from keras.optimizers import RMSprop
@@ -155,8 +148,6 @@ history = model.fit_generator(
 # ### Loading our classifer
 # 
 
-# In[6]:
-
 
 from keras.models import load_model
 
@@ -164,8 +155,6 @@ classifier = load_model('recognise.h5')
 
 
 # ### Testing our classifer on some test images
-
-# In[36]:
 
 
 import os
@@ -216,16 +205,5 @@ for i in range(0,2):
     cv2.waitKey(0)
 
 cv2.destroyAllWindows()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 
 
